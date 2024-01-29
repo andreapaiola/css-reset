@@ -1,0 +1,63 @@
+*,*::before,*::after{
+    box-sizing: border-box;
+    min-height: 0;
+    min-width: 0;
+}
+
+html{
+    hanging-puntuation: first last;
+}
+
+body{
+    font-family: system-ui, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* reset harder */
+/*
+html{
+    color-scheme: dark light;
+}
+*{
+    margin: 0;
+    padding: 0;
+    border: none;
+    font: inherit;
+}
+*/
+
+img,picture,svg,video,iframe,embed,canvas{
+    font-style: italic;
+    max-width: 100%;
+    height: auto;
+    vertical-align: middle;
+    background-repeat: no-repeat;
+    background-size: cover;
+    shape-margin: .75rem;
+}
+
+img:not(src){
+    display: none;
+}
+
+video{
+    aspect-ratio: 16 / 9 auto;
+}
+
+h1,h2,h3,h4,h5,h6{
+    max-width: 75ch;
+    text-wrap: balance;
+}
+
+p{
+    max-width: 75ch;
+    text-wrap: pretty;
+}
+
+@media (prefers-reduced-motion: no-preferece){
+    :has(:target){
+        scroll-behaviour: smooth;
+        scroll-padding-top: 2rem;
+    }
+}

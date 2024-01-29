@@ -1,2 +1,2 @@
 # css-reset
-Modern CSS reset &amp; common defaults
+Modern CSS reset &amp; beautyfull common defaults
