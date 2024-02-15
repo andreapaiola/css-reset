@@ -37,9 +37,6 @@ img,picture,svg,video,iframe,embed,canvas{
     shape-margin: .75rem;
 }
 
-img:not(src){
-    display: none;
-}
 
 video{
     aspect-ratio: 16 / 9 auto;
@@ -64,6 +61,24 @@ p{
 
 
 .wrapper{
+    --content-max-width: 1440;
+    --content-max-width-mobile: 375;
+    --font-size-desktop: 24;
+    --font-size-mobile: 16;
+
+    --px-in-rem: 16;
+
+    --padding-inline: 5rem;
+
+    width: min( calc( var(--content-max-width) * 1px ), 100% - (var(--padding-inline) / 2));
+    margin-inline:  auto;
+
+    /* fluid font with clamp calculator */
+    --font-fluid-factor: calc( (var(--font-size-desktop) - var(--font-size-mobile)) / (var(--content-max-width) - var(--content-max-width-mobile)) );
+    --font-size-min: calc( (var(--font-size-mobile) / var(--px-in-rem)) * 1rem );
+    --font-size-preferred: calc( (var(--font-fluid-factor) * 100cqw) + ((var(--font-size-mobile) - (var(--font-fluid-factor) * var(--content-max-width-mobile))) / var(--px-in-rem) * 1rem) );
+    --font-size-max: calc( (var(--font-size-desktop) / var(--px-in-rem) ) * 1rem );
+    font-size: clamp( var(--font-size-min), var(--font-size-preferred), var(--font-size-max) );
 
 }
 
@@ -95,12 +110,11 @@ p{
   
 /* columns */
 .columns {
-    /* user setting */
+    
     --min-column-size: 10rem;
     --column-count: 3;
     --gap: 2rem;
     
-    /* calculations */
     --breakpoint: calc(var(--min-column-size) * var(--column-count) + (var(--gap) * (var(--column-count) - 1)) );
     --column-size: calc((100% / var(--column-count)) - var(--gap));
     
@@ -115,4 +129,48 @@ p{
       );
   }
   
-
+/* grid flow with breakouts, also fullwidth */
+.content-grid {
+    --padding-inline: 1rem;
+    --content-max-width: 600px;
+    --breakout-max-width: 900px;
+  
+    --breakout-size: calc(
+      (var(--breakout-max-width) - var(--content-max-width)) / 2
+    );
+  
+    display: grid;
+    grid-template-columns:
+      [full-width-start] minmax(var(--padding-inline), 1fr)
+      [breakout-start] minmax(0, var(--breakout-size))
+      [content-start] min(
+        100% - (var(--padding-inline) * 2),
+        var(--content-max-width)
+      )
+      [content-end]
+      minmax(0, var(--breakout-size)) [breakout-end]
+      minmax(var(--padding-inline), 1fr) [full-width-end];
+  }
+  
+  .content-grid > :not(.breakout, .full-width),
+  .full-width > :not(.breakout, .full-width) {
+    grid-column: content;
+  }
+  
+  .content-grid > .breakout {
+    grid-column: breakout;
+  }
+  
+  .content-grid > .full-width {
+    grid-column: full-width;
+  
+    display: grid;
+    grid-template-columns: inherit;
+  }
+  
+  img.full-width {
+    width: 100%;
+    max-height: 45vh;
+    object-fit: cover;
+  }
+  
