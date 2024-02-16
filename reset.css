@@ -61,23 +61,23 @@ p{
 
 
 .wrapper{
-    --content-max-width: 1440;
-    --content-max-width-mobile: 375;
-    --font-size-desktop: 24;
-    --font-size-mobile: 16;
+    --content-max-width-big: 1440;
+    --content-max-width-small: 375;
+    --font-size-big: 24;
+    --font-size-small: 16;
 
     --px-in-rem: 16;
 
     --padding-inline: 5rem;
 
-    width: min( calc( var(--content-max-width) * 1px ), 100% - (var(--padding-inline) / 2));
+    width: min( calc( var(--content-max-width-big) * 1px ), 100% - (var(--padding-inline) / 2));
     margin-inline:  auto;
 
     /* fluid font with clamp calculator */
-    --font-fluid-factor: calc( (var(--font-size-desktop) - var(--font-size-mobile)) / (var(--content-max-width) - var(--content-max-width-mobile)) );
-    --font-size-min: calc( (var(--font-size-mobile) / var(--px-in-rem)) * 1rem );
-    --font-size-preferred: calc( (var(--font-fluid-factor) * 100cqw) + ((var(--font-size-mobile) - (var(--font-fluid-factor) * var(--content-max-width-mobile))) / var(--px-in-rem) * 1rem) );
-    --font-size-max: calc( (var(--font-size-desktop) / var(--px-in-rem) ) * 1rem );
+    --font-size-fluid-factor: calc( (var(--font-size-big) - var(--font-size-small)) / (var(--content-max-width-big) - var(--content-max-width-small)) );
+    --font-size-min: calc( (var(--font-size-small) / var(--px-in-rem)) * 1rem );
+    --font-size-preferred: calc( (var(--font-size-fluid-factor) * 100cqw) + ((var(--font-size-small) - (var(--font-size-fluid-factor) * var(--content-max-width-small))) / var(--px-in-rem) * 1rem) );
+    --font-size-max: calc( (var(--font-size-big) / var(--px-in-rem) ) * 1rem );
     font-size: clamp( var(--font-size-min), var(--font-size-preferred), var(--font-size-max) );
 
 }
@@ -136,7 +136,7 @@ p{
     --breakout-max-width: 900px;
   
     --breakout-size: calc(
-      (var(--breakout-max-width) - var(--content-max-width)) / 2
+      (var(--breakout-max-width) - var(--content-max-width-big)) / 2
     );
   
     display: grid;
@@ -145,7 +145,7 @@ p{
       [breakout-start] minmax(0, var(--breakout-size))
       [content-start] min(
         100% - (var(--padding-inline) * 2),
-        var(--content-max-width)
+        var(--content-max-width-big)
       )
       [content-end]
       minmax(0, var(--breakout-size)) [breakout-end]
